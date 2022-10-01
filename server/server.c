@@ -6,7 +6,8 @@
 #include <unistd.h>
 
 #define PORT 9090
-#define IP_ADDR "127.0.0.1"
+// #define IP_ADDR "127.0.0.1"
+#define IP_ADDR "192.168.1.223"
 
 char server_message[100], client_message[100];
 
@@ -48,6 +49,7 @@ int main(void){
 
     while (1)
     {
+        clear_buffers();
         // Receive client's message:
         if (recvfrom(socket_desc, client_message, sizeof(client_message), 0,
             (struct sockaddr*)&client_addr, &client_struct_length) < 0){
@@ -72,8 +74,6 @@ int main(void){
         }else{
             printf("Sent message\n");
         }
-
-        clear_buffers();
     }
     
     // Close the socket:

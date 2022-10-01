@@ -4,3 +4,6 @@ build:
 run:
 	./a.out
 
+start:
+	make build && make run
+

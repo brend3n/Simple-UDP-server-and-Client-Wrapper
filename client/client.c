@@ -6,7 +6,8 @@
 #include <stdlib.h>
 
 #define server_PORT 9090
-#define server_IP_ADDR "127.0.0.1"
+// #define server_IP_ADDR "127.0.0.1"
+#define server_IP_ADDR "192.168.1.223"
 
 int main(void){
     int socket_desc;
