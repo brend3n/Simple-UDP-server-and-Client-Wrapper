@@ -29,6 +29,8 @@ unsigned int localPort = 2390;      // local port to listen on
 #define send_port 9090
 #define send_ip "192.168.1.223"
 
+int serial_enabled = 0;
+
 
 char packetBuffer[256]; //buffer to hold incoming packet
 char  ReplyBuffer[] = "Hello, from Arduino.";       // a string to send back
@@ -43,17 +45,20 @@ void setup() {
 
   Serial.begin(9600);
 
-  while (!Serial) {
+  // Wait 5 seconds for serial
+  Serial.setTimeout(5000);
 
-    ; // wait for serial port to connect. Needed for native USB port only
-
+  if (Serial)
+  {
+    serial_enabled = 1;
   }
 
   // check for the WiFi module:
 
   if (WiFi.status() == WL_NO_MODULE) {
 
-    Serial.println("Communication with WiFi module failed!");
+    if (serial_enabled != 0)
+      Serial.println("Communication with WiFi module failed!");
 
     // don't continue
 
@@ -64,8 +69,8 @@ void setup() {
   String fv = WiFi.firmwareVersion();
 
   if (fv < WIFI_FIRMWARE_LATEST_VERSION) {
-
-    Serial.println("Please upgrade the firmware");
+    if (serial_enabled != 0)
+      Serial.println("Please upgrade the firmware");
 
   }
 
@@ -73,10 +78,12 @@ void setup() {
 
   while (status != WL_CONNECTED) {
 
-    Serial.print("Attempting to connect to SSID: ");
+    if (serial_enabled != 0)
+    {
+      Serial.print("Attempting to connect to SSID: ");
 
-    Serial.println(ssid);
-
+      Serial.println(ssid);
+    }
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
 
     status = WiFi.begin(ssid, pass);
@@ -87,7 +94,8 @@ void setup() {
 
   }
 
-  Serial.println("Connected to wifi");
+  if (serial_enabled != 0)
+    Serial.println("Connected to wifi");
 
   printWifiStatus();
 
@@ -96,7 +104,8 @@ void setup() {
   // if you get a connection, report back via serial:
 
   Udp.begin(localPort);
-  Serial.println("UDP initialized.");
+  if (serial_enabled != 0)
+    Serial.println("UDP initialized.");
 }
 
 unsigned int msg_cnt = 0;
@@ -114,6 +123,10 @@ void loop() {
 
 void printWifiStatus() {
 
+  if (serial_enabled == 0)
+  {
+    return;
+  }
   // print the SSID of the network you're attached to:
 
   Serial.print("SSID: ");
