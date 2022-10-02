@@ -1,1 +1,3 @@
-
+[submodule "import/plibsys"]
+	path = import/plibsys
+	url = https://github.com/saprykin/plibsys.git
