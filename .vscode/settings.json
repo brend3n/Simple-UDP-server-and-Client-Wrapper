@@ -9,6 +9,8 @@
         "unistd.h": "c",
         "stdlib.h": "c",
         "string.h": "c",
-        "cstdio": "c"
+        "cstdio": "c",
+        "udp_socket.h": "c",
+        "stdio.h": "c"
     }
 }

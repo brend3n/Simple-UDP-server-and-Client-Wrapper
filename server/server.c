@@ -61,7 +61,7 @@ int main(void){
     }
     printf("Finished binding\n");
     
-    printf("Listening for incoming messages...\n\n");
+    printf("Listening for incoming messages on\n\tIP: %s\tPort: %d\n\n",IP_ADDR,PORT);
 
     while (1)
     {
