@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
@@ -17,7 +19,21 @@ void clear_buffers(){
     memset(client_message, '\0', sizeof(client_message));
 }
 
+void append_to_file(FILE* f, uint8_t* buffer)
+{
+    f = fopen("data.log", "a");
+
+    if (!f)
+    {
+        printf("Cannot open data.log.\n");
+        exit(1);
+    }
+    fputs(buffer,f);
+    fclose(f);
+}
+
 int main(void){
+    FILE* fptr;
     int socket_desc;
     struct sockaddr_in server_addr, client_addr;
     int client_struct_length = sizeof(client_addr);
@@ -60,6 +76,8 @@ int main(void){
             inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
         
         printf("Msg from client: %s\n", client_message);
+        append_to_file(fptr, client_message);
+        append_to_file(fptr, "\n");
         
         // Change to uppercase:
         for(int i = 0; client_message[i]; ++i)
