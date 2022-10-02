@@ -5,5 +5,5 @@ run:
 	./a.out
 
 start:
-	make build && make run
+	make -s build && make -s run
 

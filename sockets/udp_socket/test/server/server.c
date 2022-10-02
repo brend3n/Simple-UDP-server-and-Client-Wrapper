@@ -35,6 +35,8 @@ int main(void){
         udp_write(&udp_recv_,
             send_buff,
             strlen(send_buff));
+
+        memset(Test_Message,0,sizeof(Test_Message));
     }
 
     udp_close(&udp_recv_);

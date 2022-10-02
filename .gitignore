@@ -3,5 +3,5 @@ arduino/adruino_secrets.h
 import/
 *.gch
 server/data.log
-
+*.log
 *a.out

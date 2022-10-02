@@ -33,6 +33,8 @@ int main(void){
 
     printf("Recvd: %s\n", buffer);    
 
+    memset(buffer,0,sizeof(buffer));
+
     udp_close(&udp_sender_);
     return 0;
 }

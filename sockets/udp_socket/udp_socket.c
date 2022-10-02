@@ -1,5 +1,6 @@
 #include "udp_socket.h"
 
+
 // Initializes a UDP socket that can send and recv datagrams
 uint8_t udp_open (   
                         struct UDP_Socket* udp_socket,
@@ -63,8 +64,14 @@ uint8_t udp_read (struct UDP_Socket* udp_socket,
                         uint8_t* read_buffer, 
                         int data_len)
 {
+    // int struct_len = sizeof(udp_socket->dest_ip_addr);
+    // memset(&udp_socket->dest_ip_addr,0, sizeof(udp_socket->dest_ip_addr));
+
+
     // Receive the server's response:
     int bytes_recvd = recv(udp_socket->socket, read_buffer, data_len, 0);
+    // int bytes_recvd = recvfrom(udp_socket->socket, read_buffer, sizeof(read_buffer), 0,
+    //         (struct sockaddr*)&udp_socket->dest_ip_addr, &struct_len);
 
 
     if (bytes_recvd < 0)
@@ -73,7 +80,7 @@ uint8_t udp_read (struct UDP_Socket* udp_socket,
         return -1;
     }
 
-    log_to_file(udp_socket->file_name, read_buffer, "Rx", udp_socket->dest_ip, udp_socket->dest_port);   
+    log_to_file(udp_socket->file_name, read_buffer, "Rx", inet_ntoa(udp_socket->dest_ip_addr.sin_addr), ntohs(udp_socket->dest_ip_addr.sin_port));   
 }
 // Closes the socket
 uint8_t udp_close(struct UDP_Socket* udp_socket)
