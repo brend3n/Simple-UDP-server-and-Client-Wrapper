@@ -47,5 +47,4 @@ uint8_t udp_close(struct UDP_Socket* udp_socket);
 
 void log_to_file(char* file_name, uint8_t* buffer, char* msg_type, char* ip, int port);
 
-
 #endif // UDP_SOCKET_H_

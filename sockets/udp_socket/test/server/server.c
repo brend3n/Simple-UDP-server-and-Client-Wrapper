@@ -22,21 +22,21 @@ int main(void){
     );
 
     char Test_Message[BUFF_SIZE];
-    char send_buff[]="DEADBEEF BRENDEN\0";
+    char send_buff[]="DEADBEEF BRENDE";
     printf("Listening for incoming messages on\n\tIP: %s\tPort: %d\n\n",LOCAL_IP,LOCAL_PORT);
     while(1)
     {
+        memset(Test_Message,0,sizeof(Test_Message));
         udp_read(&udp_recv_,
                 Test_Message, 
                 BUFF_SIZE);
 
         printf("Recvd: %s\n", Test_Message);
-
+        
         udp_write(&udp_recv_,
-            send_buff,
-            strlen(send_buff));
+            Test_Message,
+            BUFF_SIZE);
 
-        memset(Test_Message,0,sizeof(Test_Message));
     }
 
     udp_close(&udp_recv_);

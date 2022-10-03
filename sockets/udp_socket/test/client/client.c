@@ -20,20 +20,28 @@ int main(void){
         FILENAME
     );
 
-    char Test_Message[]="DEADBEEF BRENDEN\0";
+    char Test_Message[]= "MORTON";
     char buffer[BUFF_SIZE];
 
-    udp_write(&udp_sender_,
-            Test_Message,
-            strlen(Test_Message));
+    while (1){
+        memset(buffer,0,sizeof(buffer));
 
-    udp_read(&udp_sender_,
-        buffer, 
-        BUFF_SIZE);
+        char echo_str[1024];
+        printf("Enter a string: ");
+        scanf("%s", echo_str);
+        
+        udp_write(&udp_sender_,
+                echo_str,
+                strlen(echo_str));
 
-    printf("Recvd: %s\n", buffer);    
+        udp_read(&udp_sender_,
+            buffer, 
+            BUFF_SIZE);
 
-    memset(buffer,0,sizeof(buffer));
+        printf("Recvd: %s\n", buffer); 
+    }
+       
+
 
     udp_close(&udp_sender_);
     return 0;
